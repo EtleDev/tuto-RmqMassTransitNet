@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+
+  mt_rmq:
+    image: rabbitmq:management-alpine
+    container_name: mt-rmq
+    hostname: mt-rmq
+    restart: unless-stopped
+    # environment:
+      # RABBITMQ_DEFAULT_USER: admin
+      # RABBITMQ_DEFAULT_PASS: r00t
+      #RABBITMQ_DEFAULT_VHOST: core-host
+    ports:
+      - "15672:15672"
+      - "15671:15671"
+      - "25672:25672"
+      - "15691:15691"
+      - "15692:15692"
+      - "4369:4369"
+    expose:
+      - "5672"    
+      - "5671"    
+    volumes:
+      - rmq_data:/var/lib/rabbitmq
+    networks:
+      - mt-rmq
+    # profiles:
+      # - standalone
+    #mem_limit: 256m
+    #mem_reservation: 128M
+    #cpus: 0.5
+
+networks:
+  mt-rmq:
+    driver: bridge
+    name: mt-rmq-net
+    
+volumes:
+  rmq_data:
+    name: mt-rmq-vol
