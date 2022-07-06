@@ -31,6 +31,24 @@ services:
     #mem_reservation: 128M
     #cpus: 0.5
 
+  mt_sender:
+    image: ${DOCKER_REGISTRY-}mt_sender
+    build:
+      context: .
+      dockerfile: EtleDev.Tutos.MassTransit.Sender/Dockerfile
+    ports:
+      - "5003:80"
+    networks:
+      - mt-rmq
+
+  mt_receiver:
+    image: ${DOCKER_REGISTRY-}mt_receiver
+    build:
+      context: .
+      dockerfile: EtleDev.Tutos.MassTransit.Receiver/Dockerfile
+    networks:
+      - mt-rmq
+
 networks:
   mt-rmq:
     driver: bridge
