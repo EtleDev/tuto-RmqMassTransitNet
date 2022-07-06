@@ -10,6 +10,7 @@ builder.Services.AddMassTransit(x =>
     {
         cfg.Host("amqp://admin:r00t@mt_rmq");
     });
+    x.AddRequestClient<Ping>();
 });
 
 EndpointConvention.Map<Machin>(new Uri("queue:truc-receiver"));
